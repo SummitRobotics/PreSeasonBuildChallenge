@@ -18,9 +18,8 @@ public class Conveyor extends SubsystemBase {
     private int count;
     public Conveyor(XboxController controller) {
         motor = new CANSparkMax(0, MotorType.kBrushless);
-        sensor = new TimeOfFlight(0);
+        sensor = new TimeOfFlight(00);
         this.controller = controller;
-        sawLastTime = false;
         count = 0;
     }
 
@@ -37,27 +36,27 @@ public class Conveyor extends SubsystemBase {
 
     @Override //updates and checks value of distance, if 
     public void periodic() {
-        if (controller.getAButton()) {
-            setSpeed(1);
-        } else if (getDistance() < 1000) {
-            setSpeed(0.5);
-        } else {
-            setSpeed(0);
-            TickMeter(5); //timer to measure time after belt turn off 
-
-        }
-        if (getDistance() < 1000 && !sawLastTime) {
+         if (getDistance() > 1000) {
+            TickMeter(5);
             count++;
+        } 
+        if(count == 5){
+            setSpeed(.5);
+            
+            
+            
+            
+            
+
+
+
         }
-        if (getDistance() < 1000) {
-            sawLastTime = true;
-        } else {
-            sawLastTime = false;
-        }
 
 
 
+    }
 
+    private void when(boolean b) {
     }
 
     private void TickMeter(int i) {
